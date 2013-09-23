@@ -39,9 +39,9 @@ void printArray(int n, int *arr)
     printf("%d + ", arr[i]);
   }
   printf("%d", arr[i]);
-  //printf("%d", arr[i-1]);
   printf("\n");
 }
+
 void partition(int n, int *arr, int level)
 {
   int val=0; //first value used
@@ -57,8 +57,6 @@ void partition(int n, int *arr, int level)
     arr[level] = val;
     partition(n-val,arr, level+1);
   }
-  
-  
 }
 
 
@@ -91,11 +89,31 @@ void partitionAll(int value)
  *
  */
 
-
+void partitionIncreasingHelp(int n, int *arr, int level)
+{
+  int val=0; //first value used
+  //int ind=0;
+  if(n==0)
+  {
+    //arr[level] = n;
+    printArray(level, arr);//
+    return;
+  }
+  for(val =1;val<=n; val++)
+  {
+    if((level==0) || arr[level-1]<val)
+    {
+      arr[level] = val;
+      partitionIncreasingHelp(n-val,arr, level+1);
+    }
+  }
+}
 void partitionIncreasing(int value)
 {
   printf("partitionIncreasing %d\n", value);
-
+     int *arr = malloc(sizeof(int)*value);
+   partitionIncreasingHelp(value,arr,0);
+   free(arr); 
 }
 
 /*
@@ -116,13 +134,33 @@ void partitionIncreasing(int value)
  * generates invalid partitions and checks validity before printing.
  *
  */
-
+void partitionDecreasingHelp(int n, int *arr, int level)
+{
+  int val=0; //first value used
+  //int ind=0;
+  if(n==0)
+  {
+    //arr[level] = n;
+    printArray(level, arr);//
+    return;
+  }
+  for(val =n;val>0; val--)
+  {
+    if((level==0) || arr[level-1]>val)
+    {
+      arr[level] = val;
+      partitionDecreasingHelp(n-val,arr, level+1);
+    }
+  }
+}
 
 void partitionDecreasing(int value)
 {
   printf("partitionDecreasing %d\n", value);
   
-
+   int *arr = malloc(sizeof(int)*value);
+   partitionDecreasingHelp(value,arr,0);
+   free(arr); 
 }
 
 /*
@@ -142,11 +180,28 @@ void partitionDecreasing(int value)
  * generates invalid partitions and checks validity before printing.
  */
 
-
+void partitionOddHelper(int n, int *arr, int level)
+{
+  int val=0; //first value used
+  //int ind=0;
+  if(n==0)
+  {
+    //arr[level] = n;
+    printArray(level, arr);//
+    return;
+  }
+  for(val =1;val<=n; val+=2)
+  {
+    arr[level] = val;
+    partitionOddHelper(n-val,arr, level+1);
+  }
+}
 void partitionOdd(int value)
 {
   printf("partitionOdd %d\n", value);
-  
+  int *arr = malloc(sizeof(int)*value);
+   partitionOddHelper(value,arr,0);
+   free(arr); 
 }
 
 /*
@@ -167,10 +222,28 @@ void partitionOdd(int value)
  * The program should generate only valid partitions.  Do not
  * generates invalid partitions and checks validity before printing.
  */
-
+void partitionEvenHelper(int n, int *arr, int level)
+{
+  int val=0; //first value used
+  //int ind=0;
+  if(n==0)
+  {
+    //arr[level] = n;
+    printArray(level, arr);//
+    return;
+  }
+  for(val =2;val<=n; val+=2)
+  {
+    arr[level] = val;
+    partitionEvenHelper(n-val,arr, level+1);
+  }
+}
 void partitionEven(int value)
 {
   printf("partitionEven %d\n", value);
+    int *arr = malloc(sizeof(int)*value);
+   partitionEvenHelper(value,arr,0);
+   free(arr);
 
 }
 
@@ -192,10 +265,28 @@ void partitionEven(int value)
  * generates invalid partitions and checks validity before printing.
  */
 
-
+void partitionOddAndEvenHelper(int n, int *arr, int level)
+{
+  int val=0; //first value used
+  //int ind=0;
+  if(n==0)
+  {
+    //arr[level] = n;
+    printArray(level, arr);//
+    return;
+  }
+  for(val =1;val<=n; val+=2)
+  {
+    arr[level] = val;
+    partitionOddAndEvenHelper(n-val,arr, level+1);
+  }
+}
 void partitionOddAndEven(int value)
 {
   printf("partitionOddAndEven %d\n", value);
+  int *arr = malloc(sizeof(int)*value);
+  partitionOddAndEvenHelper(value,arr,0);
+  free(arr);
   
 }
 
@@ -216,9 +307,81 @@ void partitionOddAndEven(int value)
  */
 
 
+int primeChecker(int n)
+{
+   int i=0;
+   if(n<=1)
+   {
+     return 0;
+   }
+   for(i=2;i<=n-1;i++)
+   {
+     if(n%i == 0)
+     {
+       return 0;
+     }
+   }
+   return 1;
+}
+int primeTotal(int n)
+{
+  int i=0;
+  int noOfPrimes=0;
+  for(i=2; i<=n; i++)
+  {
+    if(primeChecker(i)==1)
+    {
+	noOfPrimes++;
+    }
+  }
+  return noOfPrimes;
+}
 
+void primeArrayFiller(int value, int Totalnumberofprimes, int *primeArray)
+{
+  int i=0;
+  int j=0;
+  for(i=0;i<=value;i++)
+  {
+    if( primeChecker(i) ==1)
+    {
+      primeArray[j] = i;
+      j++;
+    }
+  }
+   
+}
+//void partitionPrimeHelper(int n, int *arr, int level, int *primeArray, int totalPrimes)
+void partitionPrimeHelper(int n, int *arr, int level)
+{
+  int val=0; //first value used
+  //int ind=0;
+  if(n==0)
+  {
+    //arr[level] = n;
+    printArray(level, arr);//
+    return;
+  }
+  for(val =0;val<=/*totalPrimes*/n; val++)
+  {
+    if(primeChecker(val)==1)
+    {
+    //arr[level] = primeArray[val];
+    //partitionPrimeHelper(n-primeArray[val],arr, level+1, primeArray, totalPrimes);
+    arr[level] = val;
+    partitionPrimeHelper(n-val,arr, level+1);
+    }
+  }
+}
 void partitionPrime(int value)
 {
   printf("partitionPrime %d\n", value);
-
+  int *arr = malloc(sizeof(int)*value);
+ // int noOfPrimes = primeTotal(value);
+  //int *primeArray = malloc(sizeof(int)*noOfPrimes);
+  //primeArrayFiller(value, noOfPrimes, primeArray);
+  //partitionPrimeHelper(value,arr,0, primeArray, noOfPrimes);
+  partitionPrimeHelper(value,arr,0,);
+  free(arr);
+  //free(primeArray);
 }
