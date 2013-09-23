@@ -275,10 +275,21 @@ void partitionOddAndEvenHelper(int n, int *arr, int level)
     printArray(level, arr);//
     return;
   }
-  for(val =1;val<=n; val+=2)
+  if((level%2)==0)
   {
-    arr[level] = val;
-    partitionOddAndEvenHelper(n-val,arr, level+1);
+    for(val =1;val<=n; val+=2)
+    {
+      arr[level] = val;
+      partitionOddAndEvenHelper(n-val,arr, level+1);
+    }
+  }
+  else
+  {
+    for(val =2;val<=n; val+=2)
+    {
+      arr[level] = val;
+      partitionOddAndEvenHelper(n-val,arr, level+1);
+    }
   }
 }
 void partitionOddAndEven(int value)
