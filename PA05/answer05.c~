@@ -306,9 +306,9 @@ int saveString(char * filename, char * * arrString, int numString)
 	{
 		return 0;
 	}
-	for (i=0; i < numInteger; i++)
+	for (i=0; i < numString; i++)
 	{
-		fprintf(fp, "%s\n", arrInteger[i]);
+		fprintf(fp, "%s\n", arrString[i]);
 	}
 	fclose(fp);
 	return 1;//?????????????

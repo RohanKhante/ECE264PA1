@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "pa05.h"
+#define MAXLENGTH 180
 
 /*
  * Read a file of integers.
